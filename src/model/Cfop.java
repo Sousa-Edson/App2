@@ -1,25 +1,16 @@
 package model;
 
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@NamedQueries({
-    @NamedQuery(name = "Cfop.consultaTodos",
-            query = "SELECT c FROM Cfop c ")
-
-})
 public class Cfop {
 
     @Id
@@ -34,8 +25,8 @@ public class Cfop {
     @ManyToOne()
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "cfop")
-    private List<Nota> notas;
+//    @OneToMany(mappedBy = "cfop")
+//    private List<Nota> notas;
 
     public Long getId() {
         return id;
@@ -87,13 +78,13 @@ public class Cfop {
         this.usuario = usuario;
     }
 
-    public List<Nota> getNotas() {
-        return notas;
-    }
-
-    public void setNotas(List<Nota> notas) {
-        this.notas = notas;
-    }
+//    public List<Nota> getNotas() {
+//        return notas;
+//    }
+//
+//    public void setNotas(List<Nota> notas) {
+//        this.notas = notas;
+//    }
 
     @Override
     public String toString() {

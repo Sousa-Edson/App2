@@ -10,7 +10,7 @@ import view.CfopForm;
 
 public class CfopService {
 
-    Cfop beans = new Cfop();
+    Cfop cfop = new Cfop();
     CfopDAO dao = new CfopDAO();
 
     public Cfop create(CfopForm view) {
@@ -18,12 +18,13 @@ public class CfopService {
         Date d = new Date();
         Usuario user = new Usuario();
         user.setId(1L);
-        beans.setNome("" + view.getTxtNcm().getValue());
-        beans.setDescricao(view.getTxtDescricao().getText());
-        beans.setAtivo(true);
-        beans.setUsuario(user);
-        beans.setDataHora(d);
-        return beans = dao.Salvar(beans);
+        cfop.setNome("" + view.getTxtNcm().getValue());
+        cfop.setDescricao(view.getTxtDescricao().getText());
+        cfop.setAtivo(true);
+        cfop.setUsuario(user);
+        cfop.setDataHora(d);
+        cfop.setId(view.getIdCfop());
+        return cfop = dao.Salvar(cfop);
 
     }
 
@@ -31,33 +32,31 @@ public class CfopService {
         Date d = new Date();
         Usuario user = new Usuario();
         user.setId(1L);
-        beans.setNome("5948");
-        beans.setDescricao("Simples saida");
-        beans.setAtivo(true);
-        beans.setUsuario(user);
-        beans.setDataHora(d);
-        beans = dao.Salvar(beans);
-        System.out.println(beans.toString() + "  data hora :  " + d);
+        cfop.setNome("5948");
+        cfop.setDescricao("Simples saida");
+        cfop.setAtivo(true);
+        cfop.setUsuario(user);
+        cfop.setDataHora(d);
+        cfop = dao.Salvar(cfop);
+        System.out.println(cfop.toString() + "  data hora :  " + d);
     }
 
-    public void deletar(Long id) {
-        beans.setId(id);
-        beans = dao.remover(beans.getId());
-        System.out.println(beans.toString());
+  public Cfop delete(CfopForm view) {
+        cfop.setId(view.getIdCfop());
+        return cfop = dao.remover(cfop.getId());
     }
 
-    public void consultaPorId(Long id) {
-        Cfop u = dao.consultaPorId(id);
-        System.out.println(u.toString());
-        System.out.println(u.getUsuario().getNome());
+     public Cfop consultaPorId(Long id) {
+        return  dao.consultaPorId(id);
     }
 
-    public List<Cfop> consultaTodos() {
-        List<Cfop> cfops = dao.consultarTodos();
+    public List<Cfop> consultaTodos(String txt) {
+        List<Cfop> cfops = dao.consultarTodos(txt);
         ArrayList dados = new ArrayList();
         for (Cfop u : cfops) {
             dados.add((new Object[]{u.getId(), u.getNome(), u.getDescricao()}));
         }
         return dados;
     }
+
 }

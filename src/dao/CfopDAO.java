@@ -60,11 +60,11 @@ public class CfopDAO {
         return cfop;
     }
 
-    public List<Cfop> consultarTodos() {
+    public List<Cfop> consultarTodos(String txt) {
         EntityManager em = getEM();
         List<Cfop> cfops;
         try {
-            Query q = em.createNamedQuery("Cfop.consultaTodos");
+            Query q =em.createQuery("SELECT u FROM Cfop u  WHERE (coalesce((id)) ||' '||coalesce((nome)) ||' '||coalesce((descricao)))LIKE '%"+txt+"%' ORDER BY id ASC " );
             cfops = q.getResultList();
         } catch (Exception e) {
             cfops = new ArrayList();

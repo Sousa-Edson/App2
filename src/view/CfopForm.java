@@ -24,12 +24,12 @@ public class CfopForm extends javax.swing.JFrame {
 
     private final CfopController controller;
     Conversor manipulateString;
-    int idUnidade = 0;
+    Long idCfop = 0L;
 
     public CfopForm() {
         initComponents();
         controller = new CfopController(this);
-        controller.loadTable("", false);
+        controller.loadTable("");
         btnExcluir.setVisible(false);
     }
 
@@ -276,23 +276,23 @@ public class CfopForm extends javax.swing.JFrame {
 
     private void lblPesquisaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPesquisaMouseClicked
       if (txtPesquisa.getText().length() >= 0) {
-            controller.loadTable(txtPesquisa.getText(), false);
+            controller.loadTable(txtPesquisa.getText());
         }
         if (evt.getButton() == 3) {
-            controller.loadTable(txtPesquisa.getText(), true);
+            controller.loadTable(txtPesquisa.getText());
         }
     }//GEN-LAST:event_lblPesquisaMouseClicked
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
         if (evt.getButton() == 1) {
             if (evt.getClickCount() == 2) {
-                idUnidade = (int) tabela.getValueAt(tabela.getSelectedRow(), 0);
-                controller.loadRecord(idUnidade);
+                idCfop =  (Long) tabela.getValueAt(tabela.getSelectedRow(), 0);
+                controller.loadRecord(idCfop);
                   btnExcluir.setVisible(false);
             }
         }
         if (evt.getButton() == 3) {
-            if (idUnidade != 0) {
+            if (idCfop != 0) {
                 btnExcluir.setVisible(true);
             } else {
                 btnExcluir.setVisible(false);
@@ -326,13 +326,13 @@ public class CfopForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        controller.destroy(idUnidade);
+        controller.destroy(idCfop);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void txtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyReleased
         if (evt.getKeyCode() == evt.VK_ENTER) {
             if (txtPesquisa.getText().length() >= 2) {
-                controller.loadTable(txtPesquisa.getText(), true);
+                controller.loadTable(txtPesquisa.getText());
             }
         }
     }//GEN-LAST:event_txtPesquisaKeyReleased
@@ -399,14 +399,15 @@ public class CfopForm extends javax.swing.JFrame {
         this.manipulateString = manipulateString;
     }
 
-    public int getIdUnidade() {
-        return idUnidade;
+    public Long getIdCfop() {
+        return idCfop;
     }
 
-    public void setIdUnidade(int idUnidade) {
-        this.idUnidade = idUnidade;
+    public void setIdCfop(Long idCfop) {
+        this.idCfop = idCfop;
     }
 
+   
     public JButton getBtnExcluir() {
         return btnExcluir;
     }

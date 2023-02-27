@@ -64,7 +64,7 @@ public class UnidadeDAO {
         EntityManager em = getEM();
         List<Unidade> unidades;
         try {
-            Query s =em.createQuery("SELECT u FROM Unidade u  WHERE (coalesce((id)) ||' '||coalesce((nome)) ||' '||coalesce((descricao)))LIKE '%"+txt+"%'");
+            Query s =em.createQuery("SELECT u FROM Unidade u  WHERE (coalesce((id)) ||' '||coalesce((nome)) ||' '||coalesce((descricao)))LIKE  '%"+txt+"%' ORDER BY id ASC");
             unidades = s.getResultList();
         } catch (Exception e) {
             unidades = new ArrayList();

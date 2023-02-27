@@ -30,16 +30,15 @@ public class CfopController {
         view.getTxtNcm().requestFocus();
         view.getBtnSalvar().setEnabled(false);
         view.getBtnSalvar().setText("Salvar");
-        view.setIdUnidade(0);
+        view.setIdCfop(0L);
         view.getBtnExcluir().setVisible(false);
         view.getTxtDataHora().setText(" ");
         view.getTxtNomeUsuario().setText(" ");
-        loadTable("", false);
+        loadTable("");
 
     }
 
     public void create() {
-
         Cfop u = service.create(view);
         if (u.getId() >= 1) {
             clear();
@@ -47,36 +46,28 @@ public class CfopController {
         }
     }
 
-    public void destroy(int id) {
-//        beans.setId(id);
-//        beans.setUsuario(1);
-//        if (delete(beans) == true) {
-//            clear();
-//        } else {
-//            deactivate(beans);
-//            clear();
-//        }
-
+    public void destroy(Long id) {
+        Cfop u = service.delete(view);
+        if (u.getId() >= 1) {
+            clear();
+            u.setId(null);
+        }
     }
 
-    public void loadTable(String texto, boolean verdade) {
+    public void loadTable(String texto) {
         String[] colunas = new String[]{"Id", "Ncm", "Descrição"};
         ArrayList dados;
-        dados = (ArrayList) service.consultaTodos();
+        dados = (ArrayList) service.consultaTodos(texto);
         ModeloTabela modelo = new ModeloTabela(dados, colunas);
         view.getTabela().setModel(modelo);
         RowSorter<TableModel> sorter = new TableRowSorter<>(modelo);
         view.getTabela().setRowSorter(sorter);
-//         view.getTabela().getColumnModel().getColumn(0).setPreferredWidth(60);
         view.getTabela().getColumnModel().getColumn(0).setResizable(true);
-//         view.getTabela().getColumnModel().getColumn(1).setPreferredWidth(60);
         view.getTabela().getColumnModel().getColumn(1).setResizable(true);
-//         view.getTabela().getColumnModel().getColumn(2).setPreferredWidth(60);
         view.getTabela().getColumnModel().getColumn(2).setResizable(true);
         view.getTabela().getTableHeader().setReorderingAllowed(false);
         view.getTabela().setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         view.getTabela().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
     }
 
     public void pressKeys() {
@@ -87,19 +78,15 @@ public class CfopController {
         }
     }
 
-    public void loadRecord(int id) {
-//        for (CfopBeans u : findOne(id)) {
-//            view.setIdUnidade(id);
-//            view.getTxtNcm().setValue(Integer.parseInt(u.getNcm()));
-//            view.getTxtDescricao().setText(u.getDescricao());
-//            view.getTxtDataHora().setText("" + conversor.DataAtual(u.getDataHora()));
-//            view.getTxtNomeUsuario().setText("teste");
-//        }
+    public void loadRecord(Long id) {
+        Cfop u = service.consultaPorId(id);
+        view.setIdCfop(id);
+        view.getTxtNcm().setValue(Integer.parseInt(u.getNome().trim()));
+        view.getTxtDescricao().setText(u.getDescricao());
+        view.getTxtDataHora().setText("" + u.getDataHora());
+        view.getTxtNomeUsuario().setText(u.getUsuario().getNome());
         pressKeys();
         view.getBtnSalvar().setText("Atualizar");
     }
 
-//    public String DataAtual(Date dt) {
-//        return "Atualizado em: " + new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(dt);
-//    }
 }
