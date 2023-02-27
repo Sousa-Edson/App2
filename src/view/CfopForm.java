@@ -5,27 +5,31 @@
  */
 package view;
 
-import controller.UnidadeController;
+import controller.CfopController;
+import conversor.Conversor;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
+ 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.JTextField; 
 
 /**
  *
  * @author edson
  */
-public class UnidadeForm extends javax.swing.JFrame {
+public class CfopForm extends javax.swing.JFrame {
 
-    private final UnidadeController controller;
-//    Conversor manipulateString ;
-    Long idUnidade = 0L;
+    private final CfopController controller;
+    Conversor manipulateString;
+    int idUnidade = 0;
 
-    public UnidadeForm() {
+    public CfopForm() {
         initComponents();
-        controller = new UnidadeController(this);
-        controller.loadTable("");
+        controller = new CfopController(this);
+        controller.loadTable("", false);
         btnExcluir.setVisible(false);
     }
 
@@ -47,15 +51,14 @@ public class UnidadeForm extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        txtSigla = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtDescricao = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
-        ckFragmentado = new javax.swing.JCheckBox();
         btnLimpar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         txtNomeUsuario = new javax.swing.JLabel();
         txtDataHora = new javax.swing.JLabel();
+        txtNcm = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -65,9 +68,9 @@ public class UnidadeForm extends javax.swing.JFrame {
 
         lblTitulo.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitulo.setText("Unidade");
+        lblTitulo.setText("Cfop");
 
-        lblPesquisa.setIcon(new javax.swing.ImageIcon("/home/edson/Projetos/desktop/GerenciamentoProdutos/src/main/java/com/edson/gerenciamentoprodutos/icons/lupa.png")); // NOI18N
+        lblPesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/lupa.png"))); // NOI18N
         lblPesquisa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblPesquisa.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -85,7 +88,7 @@ public class UnidadeForm extends javax.swing.JFrame {
 
         lblVersao.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lblVersao.setForeground(new java.awt.Color(255, 255, 255));
-        lblVersao.setText("Listar e cadastrar unidades");
+        lblVersao.setText("Listar e cadastrar Cfops");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -144,19 +147,8 @@ public class UnidadeForm extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tabela);
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Sigla ");
+        jLabel1.setText("Cfop");
 
-        txtSigla.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtSiglaKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtSiglaKeyReleased(evt);
-            }
-        });
-
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Descrição ");
 
         txtDescricao.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -171,8 +163,9 @@ public class UnidadeForm extends javax.swing.JFrame {
         btnSalvar.setBackground(new java.awt.Color(0, 204, 0));
         btnSalvar.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
         btnSalvar.setForeground(new java.awt.Color(255, 255, 255));
-        btnSalvar.setIcon(new javax.swing.ImageIcon("/home/edson/Projetos/desktop/GerenciamentoProdutos/src/main/java/com/edson/gerenciamentoprodutos/icons/salve-.png")); // NOI18N
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/salve-.png"))); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.setEnabled(false);
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
@@ -184,16 +177,8 @@ public class UnidadeForm extends javax.swing.JFrame {
             }
         });
 
-        ckFragmentado.setText("Fragmentado");
-        ckFragmentado.setBorder(null);
-        ckFragmentado.setContentAreaFilled(false);
-        ckFragmentado.setInheritsPopupMenu(true);
-        ckFragmentado.setMaximumSize(new java.awt.Dimension(108, 30));
-        ckFragmentado.setMinimumSize(new java.awt.Dimension(108, 30));
-        ckFragmentado.setPreferredSize(new java.awt.Dimension(108, 30));
-
         btnLimpar.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        btnLimpar.setIcon(new javax.swing.ImageIcon("/home/edson/Projetos/desktop/GerenciamentoProdutos/src/main/java/com/edson/gerenciamentoprodutos/icons/vassoura-16.png")); // NOI18N
+        btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/vassoura-16.png"))); // NOI18N
         btnLimpar.setText("Limpar");
         btnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,7 +189,7 @@ public class UnidadeForm extends javax.swing.JFrame {
         btnExcluir.setBackground(new java.awt.Color(255, 0, 0));
         btnExcluir.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
         btnExcluir.setForeground(new java.awt.Color(255, 255, 255));
-        btnExcluir.setIcon(new javax.swing.ImageIcon("/home/edson/Projetos/desktop/GerenciamentoProdutos/src/main/java/com/edson/gerenciamentoprodutos/icons/vassoura-16.png")); // NOI18N
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/vassoura-16.png"))); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -216,6 +201,8 @@ public class UnidadeForm extends javax.swing.JFrame {
 
         txtDataHora.setText(" ");
 
+        txtNcm.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -226,22 +213,16 @@ public class UnidadeForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtSigla, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(ckFragmentado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnLimpar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnExcluir))
-                    .addComponent(txtDataHora, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDataHora, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNcm, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
@@ -257,15 +238,13 @@ public class UnidadeForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ckFragmentado, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtSigla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNcm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSalvar)
@@ -277,8 +256,6 @@ public class UnidadeForm extends javax.swing.JFrame {
                         .addComponent(txtNomeUsuario)))
                 .addContainerGap())
         );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtDescricao, txtSigla});
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnLimpar, btnSalvar});
 
@@ -298,20 +275,20 @@ public class UnidadeForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblPesquisaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPesquisaMouseClicked
-        if (txtPesquisa.getText().length() >= 0) {
-            controller.loadTable(txtPesquisa.getText());
+      if (txtPesquisa.getText().length() >= 0) {
+            controller.loadTable(txtPesquisa.getText(), false);
         }
         if (evt.getButton() == 3) {
-            controller.loadTable(txtPesquisa.getText() );
+            controller.loadTable(txtPesquisa.getText(), true);
         }
     }//GEN-LAST:event_lblPesquisaMouseClicked
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
         if (evt.getButton() == 1) {
             if (evt.getClickCount() == 2) {
-                idUnidade =  (Long) tabela.getValueAt(tabela.getSelectedRow(), 0);
+                idUnidade = (int) tabela.getValueAt(tabela.getSelectedRow(), 0);
                 controller.loadRecord(idUnidade);
-                btnExcluir.setVisible(false);
+                  btnExcluir.setVisible(false);
             }
         }
         if (evt.getButton() == 3) {
@@ -323,50 +300,18 @@ public class UnidadeForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tabelaMouseClicked
 
-    private void txtSiglaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSiglaKeyPressed
-        if (evt.getKeyCode() == evt.VK_ENTER) {
-            txtDescricao.requestFocus();
-        }
-    }//GEN-LAST:event_txtSiglaKeyPressed
-
-    private void txtSiglaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSiglaKeyReleased
-//        txtSigla.setText(manipulateString.limitString(txtSigla.getText(), 4));
-        controller.pressKeys();
-    }//GEN-LAST:event_txtSiglaKeyReleased
-
     private void txtDescricaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescricaoKeyPressed
 
     }//GEN-LAST:event_txtDescricaoKeyPressed
 
     private void txtDescricaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescricaoKeyReleased
-//        txtDescricao.setText(manipulateString.limitString(txtDescricao.getText(), 15));
+//        txtDescricao.setText(manipulateString.limitString(txtDescricao.getText(), 30));
         controller.pressKeys();
     }//GEN-LAST:event_txtDescricaoKeyReleased
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
-        try {
-            controller.create();
-        } catch (Exception ex) {
-            System.out.println("erro\n"+ex);
-        }
-//        Date data = new Date();
-//        try {
-//            Unidade unidade = new Unidade();
-//            unidade.setDataHora(data);
-//            unidade.setAtivo(true);
-//            unidade.setNome(txtSigla.getText());
-//            unidade.setDescricao(txtDescricao.getText());
-//            unidade.setFragmentado(true);
-//            Usuario usuario = new Usuario();
-//            usuario.setId(1L);
-//            unidade.setUsuario(usuario);
-////            DaoGenerico.getInstance().inserir(unidade);
-//            UnidadeDAO dao = new UnidadeDAO();
-//            dao.Salvar(unidade);
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "Erro ao salvar => " + e.getMessage());
-//        }
+        controller.create();
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -387,7 +332,7 @@ public class UnidadeForm extends javax.swing.JFrame {
     private void txtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyReleased
         if (evt.getKeyCode() == evt.VK_ENTER) {
             if (txtPesquisa.getText().length() >= 2) {
-                controller.loadTable(txtPesquisa.getText());
+                controller.loadTable(txtPesquisa.getText(), true);
             }
         }
     }//GEN-LAST:event_txtPesquisaKeyReleased
@@ -409,19 +354,19 @@ public class UnidadeForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UnidadeForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CfopForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UnidadeForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CfopForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UnidadeForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CfopForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UnidadeForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CfopForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UnidadeForm().setVisible(true);
+                new CfopForm().setVisible(true);
             }
         });
     }
@@ -430,7 +375,6 @@ public class UnidadeForm extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JCheckBox ckFragmentado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
@@ -442,10 +386,42 @@ public class UnidadeForm extends javax.swing.JFrame {
     private javax.swing.JTable tabela;
     private javax.swing.JLabel txtDataHora;
     private javax.swing.JTextField txtDescricao;
+    private javax.swing.JSpinner txtNcm;
     private javax.swing.JLabel txtNomeUsuario;
     private javax.swing.JTextField txtPesquisa;
-    private javax.swing.JTextField txtSigla;
     // End of variables declaration//GEN-END:variables
+
+    public Conversor getManipulateString() {
+        return manipulateString;
+    }
+
+    public void setManipulateString(Conversor manipulateString) {
+        this.manipulateString = manipulateString;
+    }
+
+    public int getIdUnidade() {
+        return idUnidade;
+    }
+
+    public void setIdUnidade(int idUnidade) {
+        this.idUnidade = idUnidade;
+    }
+
+    public JButton getBtnExcluir() {
+        return btnExcluir;
+    }
+
+    public void setBtnExcluir(JButton btnExcluir) {
+        this.btnExcluir = btnExcluir;
+    }
+
+    public JButton getBtnLimpar() {
+        return btnLimpar;
+    }
+
+    public void setBtnLimpar(JButton btnLimpar) {
+        this.btnLimpar = btnLimpar;
+    }
 
     public JButton getBtnSalvar() {
         return btnSalvar;
@@ -455,36 +431,68 @@ public class UnidadeForm extends javax.swing.JFrame {
         this.btnSalvar = btnSalvar;
     }
 
-    public JCheckBox getCkFragmentado() {
-        return ckFragmentado;
+    public JLabel getjLabel1() {
+        return jLabel1;
     }
 
-    public void setCkFragmentado(JCheckBox ckFragmentado) {
-        this.ckFragmentado = ckFragmentado;
+    public void setjLabel1(JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
     }
 
-    public JTable getTblUnidade() {
-        return tabela;
+    public JLabel getjLabel3() {
+        return jLabel3;
     }
 
-    public void setTblUnidade(JTable tblUnidade) {
-        this.tabela = tblUnidade;
+    public void setjLabel3(JLabel jLabel3) {
+        this.jLabel3 = jLabel3;
     }
 
-    public JTextField getTxtDescricao() {
-        return txtDescricao;
+    public JPanel getjPanel1() {
+        return jPanel1;
     }
 
-    public void setTxtDescricao(JTextField txtDescricao) {
-        this.txtDescricao = txtDescricao;
+    public void setjPanel1(JPanel jPanel1) {
+        this.jPanel1 = jPanel1;
     }
 
-    public JTextField getTxtSigla() {
-        return txtSigla;
+    public JPanel getjPanel2() {
+        return jPanel2;
     }
 
-    public void setTxtSigla(JTextField txtSigla) {
-        this.txtSigla = txtSigla;
+    public void setjPanel2(JPanel jPanel2) {
+        this.jPanel2 = jPanel2;
+    }
+
+    public JScrollPane getjScrollPane2() {
+        return jScrollPane2;
+    }
+
+    public void setjScrollPane2(JScrollPane jScrollPane2) {
+        this.jScrollPane2 = jScrollPane2;
+    }
+
+    public JLabel getLblPesquisa() {
+        return lblPesquisa;
+    }
+
+    public void setLblPesquisa(JLabel lblPesquisa) {
+        this.lblPesquisa = lblPesquisa;
+    }
+
+    public JLabel getLblTitulo() {
+        return lblTitulo;
+    }
+
+    public void setLblTitulo(JLabel lblTitulo) {
+        this.lblTitulo = lblTitulo;
+    }
+
+    public JLabel getLblVersao() {
+        return lblVersao;
+    }
+
+    public void setLblVersao(JLabel lblVersao) {
+        this.lblVersao = lblVersao;
     }
 
     public JTable getTabela() {
@@ -495,28 +503,6 @@ public class UnidadeForm extends javax.swing.JFrame {
         this.tabela = tabela;
     }
 
-    public Long getIdUnidade() {
-        return idUnidade;
-    }
-
-    public void setIdUnidade(Long idUnidade) {
-        this.idUnidade = idUnidade;
-    }
-
-    
-
-    public JButton getBtnExcluir() {
-        return btnExcluir;
-    }
-
-    public JButton getBtnLimpar() {
-        return btnLimpar;
-    }
-
-    public JTextField getTxtPesquisa() {
-        return txtPesquisa;
-    }
-
     public JLabel getTxtDataHora() {
         return txtDataHora;
     }
@@ -524,6 +510,24 @@ public class UnidadeForm extends javax.swing.JFrame {
     public void setTxtDataHora(JLabel txtDataHora) {
         this.txtDataHora = txtDataHora;
     }
+
+    public JTextField getTxtDescricao() {
+        return txtDescricao;
+    }
+
+    public void setTxtDescricao(JTextField txtDescricao) {
+        this.txtDescricao = txtDescricao;
+    }
+
+    public JSpinner getTxtNcm() {
+        return txtNcm;
+    }
+
+    public void setTxtNcm(JSpinner txtNcm) {
+        this.txtNcm = txtNcm;
+    }
+
+   
 
     public JLabel getTxtNomeUsuario() {
         return txtNomeUsuario;
@@ -533,4 +537,12 @@ public class UnidadeForm extends javax.swing.JFrame {
         this.txtNomeUsuario = txtNomeUsuario;
     }
 
+    public JTextField getTxtPesquisa() {
+        return txtPesquisa;
+    }
+
+    public void setTxtPesquisa(JTextField txtPesquisa) {
+        this.txtPesquisa = txtPesquisa;
+    }
+ 
 }

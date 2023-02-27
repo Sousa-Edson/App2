@@ -13,10 +13,8 @@ import view.UnidadeForm;
 
 public class UnidadeController {
 
-//    Conversor conversor;
     private final UnidadeForm view;
 
-//    private Unidade beans = new Unidade();
     UnidadeService service = new UnidadeService();
 
     public UnidadeController(UnidadeForm view) {
@@ -31,11 +29,11 @@ public class UnidadeController {
         view.getTxtSigla().requestFocus();
         view.getBtnSalvar().setEnabled(false);
         view.getBtnSalvar().setText("Salvar");
-        view.setIdUnidade(0);
+        view.setIdUnidade(0L);
         view.getBtnExcluir().setVisible(false);
         view.getTxtDataHora().setText(" ");
         view.getTxtNomeUsuario().setText(" ");
-        loadTable("", false);
+        loadTable("");
 
     }
 
@@ -47,40 +45,30 @@ public class UnidadeController {
         }
     }
 
-    public void destroy(int id) {
-//        beans.setId(id);
-//        beans.setUsuario(1);
-//        if (delete(beans) == true) {
-//            clear();
-//        } else {
-//            deactivate(beans);
-//            clear();
-//        }
-
+    public void destroy(Long id) {
+        Unidade u = service.delete(view);
+        if (u.getId() >= 1) {
+            clear();
+            u.setId(null);
+        }
     }
 
-    public void loadTable(String texto, boolean verdade) {
+    public void loadTable(String texto) {
         String[] colunas = new String[]{"Id", "Sigla", "Descrição", "Fragmentado"};
         ArrayList dados;
-
-        dados = (ArrayList) service.consultaTodos();
-
+        dados = (ArrayList) service.consultaTodos(texto);
         ModeloTabela modelo = new ModeloTabela(dados, colunas);
         view.getTabela().setModel(modelo);
         RowSorter<TableModel> sorter = new TableRowSorter<>(modelo);
         view.getTabela().setRowSorter(sorter);
-//         view.getTabela().getColumnModel().getColumn(0).setPreferredWidth(60);
         view.getTabela().getColumnModel().getColumn(0).setResizable(true);
-//         view.getTabela().getColumnModel().getColumn(1).setPreferredWidth(60);
         view.getTabela().getColumnModel().getColumn(1).setResizable(true);
-//         view.getTabela().getColumnModel().getColumn(2).setPreferredWidth(60);
         view.getTabela().getColumnModel().getColumn(2).setResizable(true);
         view.getTabela().getTableHeader().setReorderingAllowed(false);
         view.getTabela().getColumnModel().getColumn(3).setResizable(true);
         view.getTabela().getTableHeader().setReorderingAllowed(false);
         view.getTabela().setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         view.getTabela().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
     }
 
     public void pressKeys() {
@@ -91,18 +79,20 @@ public class UnidadeController {
         }
     }
 
-    public void loadRecord(int id) {
-//        for (UnidadeBeans u : findOne(id)) {
-//            view.setIdUnidade(id);
-//            view.getTxtSigla().setText(u.getSigla());
-//            view.getTxtDescricao().setText(u.getDescricao());
-//            view.getCkFragmentado().setSelected(u.isFragmentado());
-//
-//            view.getTxtDataHora().setText("" + conversor.DataAtual(u.getDataHora()));
-//            view.getTxtNomeUsuario().setText("teste");
+    public void loadRecord(Long id) {
+//        System.out.println(  service.consultaPorId(id));
+        Unidade u = service.consultaPorId(id);
+//        for (Unidade u : service.consultaPorId(id)) {
+        view.setIdUnidade(id);
+        view.getTxtSigla().setText(u.getNome());
+        view.getTxtDescricao().setText(u.getDescricao());
+        view.getCkFragmentado().setSelected(u.getFragmentado());
+
+        view.getTxtDataHora().setText("" + u.getDataHora());
+        view.getTxtNomeUsuario().setText("teste");
 //        }
-//        pressKeys();
-//        view.getBtnSalvar().setText("Atualizar");
+        pressKeys();
+        view.getBtnSalvar().setText("Atualizar");
     }
 
 }

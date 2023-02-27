@@ -26,7 +26,7 @@ public class Cfop {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private String descrição;
+    private String descricao;
     private Boolean ativo;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data_hora")
@@ -53,13 +53,15 @@ public class Cfop {
         this.nome = nome;
     }
 
-    public String getDescrição() {
-        return descrição;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setDescrição(String descrição) {
-        this.descrição = descrição;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
+
+   
 
     public Boolean getAtivo() {
         return ativo;
@@ -95,7 +97,8 @@ public class Cfop {
 
     @Override
     public String toString() {
-        return "Cfop{" + "id=" + id + ", nome=" + nome + ", descri\u00e7\u00e3o=" + descrição + ", ativo=" + ativo + ", dataHora=" + dataHora + '}';
+        return "Cfop{" + "id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", ativo=" + ativo + ", dataHora=" + dataHora + '}';
     }
 
+   
 }

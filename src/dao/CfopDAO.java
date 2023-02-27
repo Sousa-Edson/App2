@@ -15,7 +15,7 @@ public class CfopDAO {
         return factory.createEntityManager();
     }
 
-    public Cfop Salvar(Cfop cfop) throws Exception {
+    public Cfop Salvar(Cfop cfop)   {
         EntityManager em = getEM();
         try {
             em.getTransaction().begin();
@@ -24,7 +24,7 @@ public class CfopDAO {
             } else {
                 if (!em.contains(cfop)) {
                     if (em.find(Cfop.class, cfop.getId()) == null) {
-                        throw new Exception("Erro ao atualizar!!");
+                         
                     }
                 }
                 cfop = em.merge(cfop); // executa update

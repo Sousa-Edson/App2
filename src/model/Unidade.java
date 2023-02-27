@@ -15,9 +15,9 @@ import javax.persistence.TemporalType;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Unidade.consultaTodos",
-            query = "SELECT u FROM Unidade u ")
+            query = "SELECT u FROM Unidade u  WHERE u.nome LIKE '% :nome %'"   ) 
 
-})
+})//((u.id) ||' '||(u.nome) ||' '||(u.descricao)) ilike
 public class Unidade {
 
     @Id
@@ -33,7 +33,6 @@ public class Unidade {
 
     @ManyToOne()
     private Usuario usuario;
- 
 
     public Long getId() {
         return id;
@@ -82,7 +81,6 @@ public class Unidade {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
- 
 
     public Boolean getFragmentado() {
         return fragmentado;

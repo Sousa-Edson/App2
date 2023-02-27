@@ -9,11 +9,11 @@ import model.Usuario;
 import view.UnidadeForm;
 
 public class UnidadeService {
-    
+
     Unidade u = new Unidade();
     UnidadeDAO dao = new UnidadeDAO();
-    
-    public Unidade create(UnidadeForm view)   {
+
+    public Unidade create(UnidadeForm view) {
         Date d = new Date();
         Usuario user = new Usuario();
         user.setId(1L);
@@ -23,41 +23,30 @@ public class UnidadeService {
         u.setFragmentado(view.getCkFragmentado().isSelected());
         u.setUsuario(user);
         u.setDataHora(d);
+        u.setId(view.getIdUnidade());
         return u = dao.Salvar(u);
-        
+
     }
-    
-    public void salvar()   {
-        Date d = new Date();
-        Usuario user = new Usuario();
-        user.setId(1L);
-        u.setNome("un");
-        u.setDescricao("unidades");
-        u.setAtivo(true);
-        u.setUsuario(user);
-        u.setDataHora(d);
-        u = dao.Salvar(u);
-        System.out.println(u.toString() + "  data hora :  " + d);
+
+    public Unidade delete(UnidadeForm view) {
+        u.setId(view.getIdUnidade());
+        return u = dao.remover(u.getId());
     }
+
+    /*divide*/
     
-    public void deletar(Long id) {
-        u.setId(id);
-        u = dao.remover(u.getId());
-        System.out.println(u.toString());
+
+    public Unidade consultaPorId(Long id) {
+        return  dao.consultaPorId(id);
     }
-    
-    public void consultaPorId(Long id) {
-        Unidade u = dao.consultaPorId(id);
-        System.out.println(u.toString());
-        System.out.println(u.getUsuario().getNome());
-    }
-    
-    public List<Unidade> consultaTodos() {
-        List<Unidade> unidades = dao.consultarTodos();
+
+    public List<Unidade> consultaTodos(String txt) {
+        List<Unidade> unidades = dao.consultarTodos(txt);
         ArrayList dados = new ArrayList();
         for (Unidade u : unidades) {
-          dados.add((new Object[]{u.getId(),u.getNome(),u.getDescricao(),u.getFragmentado()}));
-        }//"Id", "Sigla", "Descrição", "Fragmentado"
+            dados.add((new Object[]{u.getId(), u.getNome(), u.getDescricao(), u.getFragmentado()}));
+        } 
         return dados;
     }
+     
 }

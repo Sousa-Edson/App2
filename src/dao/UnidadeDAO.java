@@ -60,17 +60,18 @@ public class UnidadeDAO {
         return unidade;
     }
 
-    public List<Unidade> consultarTodos() {
+    public List<Unidade> consultarTodos(String txt) {
         EntityManager em = getEM();
         List<Unidade> unidades;
         try {
-            Query q = em.createNamedQuery("Unidade.consultaTodos");
-            unidades = q.getResultList();
+            Query s =em.createQuery("SELECT u FROM Unidade u  WHERE u.nome LIKE '%"+txt+"%'");
+            unidades = s.getResultList();
         } catch (Exception e) {
             unidades = new ArrayList();
         } finally {
             em.close();
         }
+        System.out.println(unidades.toString());
         return unidades;
     }
 }
