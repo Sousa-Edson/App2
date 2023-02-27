@@ -21,10 +21,10 @@ public class ProdutoService {
         Date d = new Date();
         Usuario user = new Usuario();
         user.setId(1L);
-        Unidade unidade = new Unidade();
-        unidade.setId(2L);
-        Ncm ncm = new Ncm();
-        ncm.setId(2L);
+        Unidade unidade = (Unidade) view.getCbUnidade().getModel().getSelectedItem();
+//        unidade.setId(unidade);
+        Ncm ncm = (Ncm) view.getCbNcm().getModel().getSelectedItem();
+//        ncm.setId(2L);
         produto.setNome(view.getTxtDescricao().getText());
           produto.setObservacao(view.getTxtInformacao().getText());
           produto.setValor(conversor.formataMilhar.toStringForDouble(view.getTxtValor().getText()));

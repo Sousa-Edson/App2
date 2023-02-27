@@ -11,7 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
- public class Unidade {
+public class Unidade {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -85,7 +85,7 @@ import javax.persistence.TemporalType;
 
     @Override
     public String toString() {
-        return "Unidade{" + "id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", ativo=" + ativo + ", dataHora=" + dataHora + '}';
+        return nome;
     }
 
 }

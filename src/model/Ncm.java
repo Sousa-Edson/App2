@@ -95,7 +95,7 @@ public class Ncm {
 
     @Override
     public String toString() {
-        return "Ncm{" + "id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", ativo=" + ativo + ", dataHora=" + dataHora + '}';
+        return nome;
     }
 
 }
