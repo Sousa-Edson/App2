@@ -15,7 +15,7 @@ public class NcmDAO {
         return factory.createEntityManager();
     }
 
-    public Ncm Salvar(Ncm ncm) throws Exception {
+    public Ncm Salvar(Ncm ncm)  {
         EntityManager em = getEM();
         try {
             em.getTransaction().begin();
@@ -24,7 +24,7 @@ public class NcmDAO {
             } else {
                 if (!em.contains(ncm)) {
                     if (em.find(Ncm.class, ncm.getId()) == null) {
-                        throw new Exception("Erro ao atualizar!!");
+                        
                     }
                 }
                 ncm = em.merge(ncm); // executa update
@@ -60,11 +60,11 @@ public class NcmDAO {
         return ncm;
     }
 
-    public List<Ncm> consultarTodos() {
+     public List<Ncm> consultarTodos(String txt) {
         EntityManager em = getEM();
         List<Ncm> ncms;
         try {
-            Query q = em.createNamedQuery("Ncm.consultaTodos");
+            Query q =em.createQuery("SELECT u FROM Ncm u  WHERE (coalesce((id)) ||' '||coalesce((nome)) ||' '||coalesce((descricao)))LIKE '%"+txt+"%' ORDER BY id ASC " );
             ncms = q.getResultList();
         } catch (Exception e) {
             ncms = new ArrayList();

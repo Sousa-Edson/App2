@@ -1,26 +1,33 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package view;
-
-import controller.CfopController;
-import conversor.Conversor;
+ 
+import controller.NcmController;
 import javax.swing.JButton;
-
+ 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+ 
+/**
+ *
+ * @author edson
+ */
+public class NcmForm extends javax.swing.JFrame {
 
-public class CfopForm extends javax.swing.JFrame {
+    private final NcmController controller;
+    Long idNcm = 0L;
 
-    private final CfopController controller;
-    Conversor manipulateString;
-    Long idCfop = 0L;
-
-    public CfopForm() {
+    public NcmForm() {
         initComponents();
-        controller = new CfopController(this);
-        controller.loadTable("");
+        controller = new NcmController(this);
+        controller.loadTable("", false);
         btnExcluir.setVisible(false);
     }
 
@@ -59,7 +66,7 @@ public class CfopForm extends javax.swing.JFrame {
 
         lblTitulo.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitulo.setText("Cfop");
+        lblTitulo.setText("Ncm");
 
         lblPesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/lupa.png"))); // NOI18N
         lblPesquisa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -79,7 +86,7 @@ public class CfopForm extends javax.swing.JFrame {
 
         lblVersao.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lblVersao.setForeground(new java.awt.Color(255, 255, 255));
-        lblVersao.setText("Listar e cadastrar Cfops");
+        lblVersao.setText("Listar e cadastrar Ncms");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -138,7 +145,7 @@ public class CfopForm extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tabela);
 
-        jLabel1.setText("Cfop");
+        jLabel1.setText("Ncm");
 
         jLabel3.setText("Descrição ");
 
@@ -266,24 +273,24 @@ public class CfopForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblPesquisaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPesquisaMouseClicked
-        if (txtPesquisa.getText().length() >= 0) {
-            controller.loadTable(txtPesquisa.getText());
+      if (txtPesquisa.getText().length() >= 0) {
+            controller.loadTable(txtPesquisa.getText(), false);
         }
         if (evt.getButton() == 3) {
-            controller.loadTable(txtPesquisa.getText());
+            controller.loadTable(txtPesquisa.getText(), true);
         }
     }//GEN-LAST:event_lblPesquisaMouseClicked
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
         if (evt.getButton() == 1) {
             if (evt.getClickCount() == 2) {
-                idCfop = (Long) tabela.getValueAt(tabela.getSelectedRow(), 0);
-                controller.loadRecord(idCfop);
-                btnExcluir.setVisible(false);
+                idNcm = (Long) tabela.getValueAt(tabela.getSelectedRow(), 0);
+                controller.loadRecord(idNcm);
+                  btnExcluir.setVisible(false);
             }
         }
         if (evt.getButton() == 3) {
-            if (idCfop != 0) {
+            if (idNcm != 0) {
                 btnExcluir.setVisible(true);
             } else {
                 btnExcluir.setVisible(false);
@@ -296,7 +303,7 @@ public class CfopForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDescricaoKeyPressed
 
     private void txtDescricaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescricaoKeyReleased
-//        txtDescricao.setText(manipulateString.limitString(txtDescricao.getText(), 30));
+         
         controller.pressKeys();
     }//GEN-LAST:event_txtDescricaoKeyReleased
 
@@ -317,13 +324,13 @@ public class CfopForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        controller.destroy(idCfop);
+        controller.destroy(idNcm);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void txtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyReleased
         if (evt.getKeyCode() == evt.VK_ENTER) {
             if (txtPesquisa.getText().length() >= 2) {
-                controller.loadTable(txtPesquisa.getText());
+                controller.loadTable(txtPesquisa.getText(), true);
             }
         }
     }//GEN-LAST:event_txtPesquisaKeyReleased
@@ -345,19 +352,19 @@ public class CfopForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CfopForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NcmForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CfopForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NcmForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CfopForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NcmForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CfopForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NcmForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CfopForm().setVisible(true);
+                new NcmForm().setVisible(true);
             }
         });
     }
@@ -382,20 +389,12 @@ public class CfopForm extends javax.swing.JFrame {
     private javax.swing.JTextField txtPesquisa;
     // End of variables declaration//GEN-END:variables
 
-    public Conversor getManipulateString() {
-        return manipulateString;
+    public Long getIdNcm() {
+        return idNcm;
     }
 
-    public void setManipulateString(Conversor manipulateString) {
-        this.manipulateString = manipulateString;
-    }
-
-    public Long getIdCfop() {
-        return idCfop;
-    }
-
-    public void setIdCfop(Long idCfop) {
-        this.idCfop = idCfop;
+    public void setIdNcm(Long idNcm) {
+        this.idNcm = idNcm;
     }
 
     public JButton getBtnExcluir() {
@@ -533,5 +532,7 @@ public class CfopForm extends javax.swing.JFrame {
     public void setTxtPesquisa(JTextField txtPesquisa) {
         this.txtPesquisa = txtPesquisa;
     }
-
+ 
+ 
+ 
 }

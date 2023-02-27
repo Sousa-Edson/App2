@@ -14,7 +14,6 @@ public class CfopService {
     CfopDAO dao = new CfopDAO();
 
     public Cfop create(CfopForm view) {
-
         Date d = new Date();
         Usuario user = new Usuario();
         user.setId(1L);
@@ -28,26 +27,13 @@ public class CfopService {
 
     }
 
-    public void salvar() throws Exception {
-        Date d = new Date();
-        Usuario user = new Usuario();
-        user.setId(1L);
-        cfop.setNome("5948");
-        cfop.setDescricao("Simples saida");
-        cfop.setAtivo(true);
-        cfop.setUsuario(user);
-        cfop.setDataHora(d);
-        cfop = dao.Salvar(cfop);
-        System.out.println(cfop.toString() + "  data hora :  " + d);
-    }
-
-  public Cfop delete(CfopForm view) {
+    public Cfop delete(CfopForm view) {
         cfop.setId(view.getIdCfop());
         return cfop = dao.remover(cfop.getId());
     }
 
-     public Cfop consultaPorId(Long id) {
-        return  dao.consultaPorId(id);
+    public Cfop consultaPorId(Long id) {
+        return dao.consultaPorId(id);
     }
 
     public List<Cfop> consultaTodos(String txt) {
