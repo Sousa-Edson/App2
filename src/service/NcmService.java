@@ -26,21 +26,27 @@ public class NcmService {
         return ncm = dao.Salvar(ncm);
 
     }
- public Ncm delete(NcmForm view) {
+
+    public Ncm delete(NcmForm view) {
         ncm.setId(view.getIdNcm());
         return ncm = dao.remover(ncm.getId());
     }
 
-     public Ncm consultaPorId(Long id) {
+    public Ncm consultaPorId(Long id) {
         return dao.consultaPorId(id);
     }
 
-   public List<Ncm> consultaTodos(String txt) {
+    public List<Ncm> consultaTodos(String txt) {
         List<Ncm> ncms = dao.consultarTodos(txt);
         ArrayList dados = new ArrayList();
         for (Ncm u : ncms) {
             dados.add((new Object[]{u.getId(), u.getNome(), u.getDescricao()}));
         }
         return dados;
+    }
+
+    public List<Ncm> buscaTodos(String txt) {
+        List<Ncm> ncms = dao.consultarTodos(txt);
+        return ncms;
     }
 }

@@ -2,63 +2,58 @@ package service;
 
 import conversor.Conversor;
 import dao.ProdutoDAO;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import model.Ncm;
 import model.Produto;
 import model.Unidade;
 import model.Usuario;
+import view.ProdutoForm;
 
 public class ProdutoService {
+  Produto produto = new Produto();
+    ProdutoDAO dao = new ProdutoDAO();
+     Conversor conversor;
 
-    Produto p = new Produto();
-    ProdutoDAO dao = new ProdutoDAO(); 
-    Conversor conversor ;
 
-    public void salvar() throws Exception {
+    public Produto create(ProdutoForm view) {
         Date d = new Date();
-
         Usuario user = new Usuario();
         user.setId(1L);
-
-        Unidade uni = new Unidade();
-        uni.setId(1L);
-
+        Unidade unidade = new Unidade();
+        unidade.setId(2L);
         Ncm ncm = new Ncm();
-        ncm.setId(1L);
+        ncm.setId(2L);
+        produto.setNome(view.getTxtDescricao().getText());
+          produto.setObservacao(view.getTxtInformacao().getText());
+          produto.setValor(conversor.formataMilhar.toStringForDouble(view.getTxtValor().getText()));
+        produto.setAtivo(true);
+        produto.setUsuario(user);
+        produto.setUnidade(unidade);
+        produto.setNcm(ncm);
+        produto.setDataHora(d);
+        produto.setId(view.getIdProduto());
+        return produto = dao.Salvar(produto);
 
-        p.setNome("Abacate");
-        p.setObservação("Abacate amarelo");
-        p.setAtivo(true);
-        p.setUsuario(user);
-        p.setUnidade(uni);
-        p.setNcm(ncm);
-        p.setDataHora(d);
-        p.setValor(conversor.formataMilhar.toStringForDouble("70,899"));
-        p = (Produto) dao.Salvar(p);
-        System.out.println(p.toString() + "  data hora :  " + d);
-        System.out.println("Valor formatado :" +conversor.formataDinheiro.toDoubleForStringMoney(p.getValor()));
     }
 
-    public void deletar(Long id) {
-        p.setId(id);
-        p = dao.remover(p.getId());
-        System.out.println(p.toString());
+    public Produto delete(ProdutoForm view) {
+        produto.setId(view.getIdProduto());
+        return produto = dao.remover(produto.getId());
     }
 
-    public void consultaPorId(Long id) {
-        Produto u = dao.consultaPorId(id);
-        System.out.println(p.toString());
-        System.out.println(p.getUsuario().getNome());
-        System.out.println(p.getUnidade().getNome());
+    public Produto consultaPorId(Long id) {
+        return dao.consultaPorId(id);
     }
 
-    public void consultaTodos() {
-        List<Produto> produtos = dao.consultarTodos();
-        for (Produto p : produtos) {
-            System.out.println(p.toString());
-            System.out.println(p.getUsuario().getNome());
-            System.out.println(p.getUnidade().getNome());
-        }
+    public List<Produto> consultaTodos(String txt) {
+        List<Produto> produtos = dao.consultarTodos(txt);
+        ArrayList dados = new ArrayList();
+        for (Produto u : produtos) {
+            dados.add((new Object[]{u.getId(), "", u.getNome(), u.getUnidade(), conversor.formataDinheiro.toDoubleForStringMoney(u.getValor())}));
+        } 
+        System.out.println(produtos.toString());
+        return dados;
     }
 }

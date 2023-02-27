@@ -34,10 +34,8 @@ public class UnidadeService {
     }
 
     /*divide*/
-    
-
     public Unidade consultaPorId(Long id) {
-        return  dao.consultaPorId(id);
+        return dao.consultaPorId(id);
     }
 
     public List<Unidade> consultaTodos(String txt) {
@@ -45,8 +43,13 @@ public class UnidadeService {
         ArrayList dados = new ArrayList();
         for (Unidade u : unidades) {
             dados.add((new Object[]{u.getId(), u.getNome(), u.getDescricao(), u.getFragmentado()}));
-        } 
+        }
         return dados;
     }
-     
+
+    public List<Unidade> buscaTodos(String txt) {
+        List<Unidade> unidades = dao.consultarTodos(txt);
+        return unidades;
+    }
+
 }

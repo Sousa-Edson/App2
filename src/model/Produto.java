@@ -28,7 +28,7 @@ public class Produto {
     private String nome;
     private Boolean ativo;
     private Double valor;
-    private String observação;
+    private String observacao;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data_hora")
     private Date dataHora;
@@ -39,8 +39,8 @@ public class Produto {
 
     @ManyToOne()
     private Ncm ncm;
-    
-     @OneToMany(mappedBy = "produto")
+
+    @OneToMany(mappedBy = "produto")
     private List<Item> itens;
 
     public Long getId() {
@@ -75,12 +75,20 @@ public class Produto {
         this.valor = valor;
     }
 
-    public String getObservação() {
-        return observação;
+    public String getObservacao() {
+        return observacao;
     }
 
-    public void setObservação(String observação) {
-        this.observação = observação;
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
+
+    public List<Item> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<Item> itens) {
+        this.itens = itens;
     }
 
     public Date getDataHora() {
@@ -117,7 +125,8 @@ public class Produto {
 
     @Override
     public String toString() {
-        return "Produto{" + "id=" + id + ", nome=" + nome + ", ativo=" + ativo + ", valor=" + valor + ", observa\u00e7\u00e3o=" + observação + ", dataHora=" + dataHora + '}';
+        return "Produto{" + "id=" + id + ", nome=" + nome + ", ativo=" + ativo + ", valor=" + valor + ", observacao=" + observacao + ", dataHora=" + dataHora + '}';
     }
 
+  
 }
