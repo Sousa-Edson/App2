@@ -80,17 +80,14 @@ public class UnidadeController {
     }
 
     public void loadRecord(Long id) {
-//        System.out.println(  service.consultaPorId(id));
         Unidade u = service.consultaPorId(id);
-//        for (Unidade u : service.consultaPorId(id)) {
         view.setIdUnidade(id);
         view.getTxtSigla().setText(u.getNome());
         view.getTxtDescricao().setText(u.getDescricao());
         view.getCkFragmentado().setSelected(u.getFragmentado());
 
         view.getTxtDataHora().setText("" + u.getDataHora());
-        view.getTxtNomeUsuario().setText("teste");
-//        }
+        view.getTxtNomeUsuario().setText(u.getUsuario().getNome());
         pressKeys();
         view.getBtnSalvar().setText("Atualizar");
     }

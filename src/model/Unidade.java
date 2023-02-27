@@ -7,18 +7,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@NamedQueries({
-    @NamedQuery(name = "Unidade.consultaTodos",
-            query = "SELECT u FROM Unidade u  WHERE u.nome LIKE '% :nome %'"   ) 
-
-})//((u.id) ||' '||(u.nome) ||' '||(u.descricao)) ilike
-public class Unidade {
+ public class Unidade {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
